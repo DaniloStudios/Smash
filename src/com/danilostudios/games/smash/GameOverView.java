@@ -16,20 +16,24 @@ import android.view.MotionEvent;
 import com.gdacarv.engine.androidgame.GameView;
 import com.gdacarv.engine.androidgame.Sprite;
 
-public class GameOverView extends GameView {
+public class GameOverView extends GameView 
+{
 
 	private Paint paintText;
 	private Context context;
 	private int score, highScore;
 
-	public GameOverView(Context context) {
+	public GameOverView(Context context) 
+	{
 		super(context);
 		this.context = context;
 	}
 
 	@Override
-	public void TouchEvents(MotionEvent event) {
-		if((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN){
+	public void TouchEvents(MotionEvent event) 
+	{
+		if((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN)
+		{
 			Context ctx = getContext();
 			((Activity) ctx).finish();
 			Intent intent = new Intent(ctx, MainGameActivity.class);
@@ -38,7 +42,8 @@ public class GameOverView extends GameView {
 	}
 
 	@Override
-	protected void onLoad() {
+	protected void onLoad() 
+	{
 		Resources res = getResources();
 		Sprite gameover; 
 		mSprites.add(gameover = new Sprite(BitmapFactory.decodeResource(res, R.drawable.gameover)));
@@ -59,7 +64,8 @@ public class GameOverView extends GameView {
 	}
 
 	@Override
-	protected void onDraw(Canvas canvas) {
+	protected void onDraw(Canvas canvas) 
+	{
 		super.onDraw(canvas);
 		canvas.drawText(context.getString(R.string.score) + " " + score, 50, getHeight()*0.6f, paintText);
 		canvas.drawText(context.getString(R.string.iniciar_jogo), 50, getHeight()*0.82f, paintText);

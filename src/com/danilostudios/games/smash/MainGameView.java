@@ -21,7 +21,8 @@ import android.app.Activity;
 import com.gdacarv.engine.androidgame.GameView;
 import com.gdacarv.engine.androidgame.Sprite;
 
-public class MainGameView extends GameView {
+public class MainGameView extends GameView 
+{
 	
 	protected int level = 1, score = 0;
 	
@@ -41,19 +42,24 @@ public class MainGameView extends GameView {
 	public SoundPool sound;
 	private int soundIdPinkHit, soundIdGoldHit, soundIdWin;
 
-	public MainGameView(Context context) {
+	public MainGameView(Context context) 
+	{
 		super(context);
 		this.context = context;
 		
 	}
 
 	@Override
-	public void TouchEvents(MotionEvent event) {
-		if((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN){
-			if(alivePinks > 0){
+	public void TouchEvents(MotionEvent event) 
+	{
+		if((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN)
+		{
+			if(alivePinks > 0)
+			{
 				float x = event.getX(), y = event.getY();
 				for(Gold gold : golds)
-					if(x > gold.x && y > gold.y && x < gold.x + gold.width && y < gold.y + gold.height){
+					if(x > gold.x && y > gold.y && x < gold.x + gold.width && y < gold.y + gold.height)
+					{
 						sound.play(soundIdGoldHit, 1f, 1f, 0, 0, 1f);
 						((Activity) context).finish();
 						Intent intent = new Intent(context, GameOverActivity.class);
@@ -61,26 +67,31 @@ public class MainGameView extends GameView {
 						context.startActivity(intent);
 					}
 				for(Pink pink : pinks)
-					if(!pink.isDead() && x > pink.x && y > pink.y && x < pink.x + pink.width && y < pink.y + pink.height){
+					if(!pink.isDead() && x > pink.x && y > pink.y && x < pink.x + pink.width && y < pink.y + pink.height)
+					{
 						sound.play(soundIdPinkHit, 1f, 1f, 0, 0, 1f);
 						pink.kill();
 						int add;
 						score += add = (int) Math.max(100 - level*3 - (System.currentTimeMillis() - startTime)/500, 1);
 						alivePinks--;
-						if(alivePinks == 0){
+						if(alivePinks == 0)
+						{
 							nextLevelSprite.visible = true;
 							sound.play(soundIdWin, 1f, 1f, 0, 0, 1f);
 						}
 						Log.d("Score", "Valeu: " + add);
 					}
-			}else{
+			}
+			else
+			{
 				newStage();
 			}
 		}
 	}
 
 	@Override
-	protected void onLoad() {
+	protected void onLoad() 
+	{
 		pinks = new ArrayList<Pink>();
 		golds = new ArrayList<Gold>();
 		Random random = new Random();
@@ -117,16 +128,21 @@ public class MainGameView extends GameView {
 	}
 	
 	@Override
-	public void update() {
+	public void update() 
+	{
 		super.update();
 		Pink pink;
-		for(int i = 0; i < pinks.size(); i++){
+		for(int i = 0; i < pinks.size(); i++)
+		{
 			pink = pinks.get(i);
-			if(pink.dead){
+			if(pink.dead)
+			{
 				mSprites.remove(pink);
 				pinks.remove(pink);
 				i--;
-			}else if(!pink.isDead()){
+			}
+			else if(!pink.isDead())
+			{
 				if(pink.x < 0 && pink.direction >= 5 && pink.direction <= 7)
 					pink.changeDirection((byte) (4 - pink.direction % 4));
 				else if(pink.x > getWidth()-pink.width && pink.direction >= 1 && pink.direction <= 3)
@@ -145,14 +161,16 @@ public class MainGameView extends GameView {
 	}
 	
 	@Override
-	protected void onDraw(Canvas canvas) {
+	protected void onDraw(Canvas canvas) 
+	{
 		super.onDraw(canvas);
 		canvas.drawText(context.getString(R.string.score) + " " + score, scoreX, scoreY, paintText);
 		if(nextLevelSprite.visible)
 			canvas.drawText(context.getString(R.string.nextlevel_msg), 50, getHeight()*0.7f, paintText);
 	}
 
-	private void newStage() {
+	private void newStage() 
+	{
 		level++;
 		nextLevelSprite.visible = false;
 		alivePinks = 5+level;
@@ -168,7 +186,8 @@ public class MainGameView extends GameView {
 			limitPinkY = getHeight()-bitmapPink.getHeight()/5,
 			limitGoldX = getWidth()-bitmapGold.getWidth()/8,
 			limitGoldY = getHeight()-bitmapGold.getHeight();
-		for(int i = 0; i < alivePinks; i++){
+		for(int i = 0; i < alivePinks; i++)
+		{
 			pinks.add(pink = new Pink(random.nextInt(limitPinkX), random.nextInt(limitPinkY), random, bitmapPink, 5, 6));
 			pink.speed = level;
 		}
