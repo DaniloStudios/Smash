@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Smash</string>
+    <string name="iniciar_jogo">Toque na tela para iniciar o jogo</string>
+    <string name="score">Score:</string>
+    <string name="nextlevel_msg">Toque na tela para continuar o jogo</string>
+    <string name="highscore">High Score:</string>
+
+</resources>
